@@ -19,7 +19,7 @@ export function createMainWindow(): BrowserWindow {
 
   win.on('ready-to-show', () => win.show())
   win.webContents.on('did-finish-load', () => {
-    win.setTitle('忧来无方')
+    win.setTitle('Cherry Tomato Chat')
   })
   win.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)

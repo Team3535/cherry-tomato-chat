@@ -44,7 +44,7 @@ export class AppTray {
       }
     ])
 
-    this.tray.setToolTip('xiao-you-pet')
+    this.tray.setToolTip('cherry-tomato-chat')
     this.tray.setContextMenu(contextMenu)
 
     this.tray.on('double-click', () => {

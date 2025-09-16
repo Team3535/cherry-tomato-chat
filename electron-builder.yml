@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: xiao-you-chat
+productName: cherry-tomato-chat
 directories:
   buildResources: build
 files:
@@ -14,7 +14,7 @@ asarUnpack:
   - resources/**
 
 win:
-  executableName: xiao-you-chat
+  executableName: cherry-tomato-chat
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
