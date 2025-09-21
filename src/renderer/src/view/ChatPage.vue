@@ -124,9 +124,8 @@ const bgStore = useBgStore()
   width: 60%;
   text-align: center;
   font-size: 2rem;
-  color: rgba(104, 98, 98, 0.9); /* 非常淡的白色 */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 增加可读性 */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  color: rgba(104, 98, 98, 0.9); /* 淡白色 */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* 增加可读性 */
   transition: all 0.3s ease;
   opacity: 0.9;
 }

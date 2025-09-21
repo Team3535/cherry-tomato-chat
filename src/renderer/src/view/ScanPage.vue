@@ -21,7 +21,7 @@
     <div class="result-area">
       <div v-if="result" class="result-show">
         <div class="title">扫描结果</div>
-        <div>{{ result }}</div>
+        <pre>{{ result }}</pre>
       </div>
       <div v-else class="preview-result">
         <img
@@ -53,12 +53,31 @@ const langOptions = [
 const result = ref('')
 const ocrStore = useOcrStore()
 
-const handleOcrUpload = async (): Promise<void> => {
+/* const handleOcrUpload = async (): Promise<void> => {
   if (ocrStore.img) {
     try {
       result.value = ''
       isLoading.value = true
       result.value = await window.api.ocrAPI.ask(ocrStore.img, lang.value)
+      if (result.value) {
+        console.log(result.value)
+        message.success('文字提取完成')
+      }
+    } catch (error) {
+      message.error(String(error))
+    } finally {
+      isLoading.value = false
+    }
+  } else {
+    message.warning(' 未上传文件')
+  }
+} */
+const handleOcrUpload = async (): Promise<void> => {
+  if (ocrStore.img) {
+    try {
+      result.value = ''
+      isLoading.value = true
+      result.value = await window.api.ocrAPI.ask(ocrStore.img)
       if (result.value) {
         console.log(result.value)
         message.success('文字提取完成')
@@ -137,6 +156,7 @@ const handleCancel = (): void => {
   color: rgba(104, 98, 98, 0.9);
   backdrop-filter: blur(6px);
   user-select: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 .loading-spinner-img {
   display: block;
