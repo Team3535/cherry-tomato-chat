@@ -2,7 +2,7 @@
   <div class="scan-page">
     <div class="submit-area">
       <div class="select-area">
-        <n-select v-model:value="lang" :options="langOptions"></n-select>
+        <n-select v-model:value="renderer" :options="rendererOptions"></n-select>
       </div>
       <drag-img-input @upload-file="handleUploadFile"></drag-img-input>
       <div class="preview-area">
@@ -21,7 +21,10 @@
     <div class="result-area">
       <div v-if="result" class="result-show">
         <div class="title">扫描结果</div>
-        <pre>{{ result }}</pre>
+        <div v-if="renderTable" ref="tableContainer"></div>
+        <div v-else>
+          <pre>{{ result }}</pre>
+        </div>
       </div>
       <div v-else class="preview-result">
         <img
@@ -39,20 +42,29 @@
 import { NIcon, NButton, useMessage, NSelect } from 'naive-ui'
 import { TableImport, Backspace } from '@vicons/tabler'
 import DragImgInput from '../components/DragImgInput.vue'
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useOcrStore } from '../stores/ocr'
+import { renderLaTeXTable } from '../utils'
+import { nextTick } from 'process'
 
 const message = useMessage()
-const lang = ref('chs')
+const renderer = ref('text')
 const isLoading = ref(false)
-const langOptions = [
-  { label: '简体中文', value: 'chs' },
-  { label: 'English', value: 'eng' },
-  { label: '日本語', value: 'jpn' }
+const rendererOptions = [
+  { label: 'text', value: 'text' },
+  { label: 'table', value: 'table' }
 ]
 const result = ref('')
+const tableContainer = ref<HTMLDivElement | null>(null)
 const ocrStore = useOcrStore()
-
+watch(result, (newVal) => {
+  nextTick(() => {
+    if (tableContainer.value && renderTable.value) {
+      renderLaTeXTable(newVal, tableContainer.value)
+    }
+  })
+})
+const renderTable = computed(() => renderer.value == 'table')
 /* const handleOcrUpload = async (): Promise<void> => {
   if (ocrStore.img) {
     try {
@@ -77,7 +89,7 @@ const handleOcrUpload = async (): Promise<void> => {
     try {
       result.value = ''
       isLoading.value = true
-      result.value = await window.api.ocrAPI.ask(ocrStore.img)
+      result.value = await window.api.ocrAPI.ask(ocrStore.img, renderTable.value)
       if (result.value) {
         console.log(result.value)
         message.success('文字提取完成')

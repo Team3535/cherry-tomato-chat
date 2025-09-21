@@ -5,8 +5,8 @@ export const ocrAPI = {
     const result = await ipcRenderer.invoke('ask-for-ocr', url, lang)
     return result
   } */
-  ask: async (img: string) => {
-    const result = await ipcRenderer.invoke('ask-for-ocr', img)
+  ask: async (img: string, renderTable: boolean) => {
+    const result = await ipcRenderer.invoke('ask-for-ocr', img, renderTable)
     return result
   }
 }

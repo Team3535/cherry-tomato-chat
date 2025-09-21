@@ -5,19 +5,31 @@ import sharp from 'sharp' */
 import { Client } from '@gradio/client'
 
 export function registerOcrHandler() {
-  ipcMain.handle('ask-for-ocr', async (_event, base64Image: string) => {
+  ipcMain.handle('ask-for-ocr', async (_event, base64Image: string, renderTable: boolean) => {
     try {
       const imageToUse = base64ToBlob(base64Image)
       const client = await Client.connect('https://stepfun-ai-got-official-online-demo.ms.show/')
-      const result = await client.predict('/run_GOT', {
-        image: imageToUse,
-        got_mode: 'plain texts OCR',
-        fine_grained_mode: 'box',
-        ocr_color: 'red',
-        ocr_box: 'Hello!!'
-      })
-      console.log(result.data)
-      return result.data[0]
+      if (renderTable) {
+        //渲染表格
+        const result = await client.predict('/run_GOT', {
+          image: imageToUse,
+          got_mode: 'format multi-crop OCR',
+          fine_grained_mode: 'box',
+          ocr_color: 'red',
+          ocr_box: 'Hello!!'
+        })
+        return result.data[0]
+      } else {
+        //渲染文本
+        const result = await client.predict('/run_GOT', {
+          image: imageToUse,
+          got_mode: 'plain multi-crop OCR',
+          fine_grained_mode: 'box',
+          ocr_color: 'red',
+          ocr_box: 'Hello!!'
+        })
+        return result.data[0]
+      }
       /* // 如果大于 1MB，自动压缩
       if (base64Size(base64Image) > 1 * 1024 * 1024) {
         imageToUse = await compressBase64(base64Image)
