@@ -109,7 +109,8 @@ const handleUploadFile = (base64: string): void => {
 }
 const handleCancel = (): void => {
   ocrStore.img = ''
-  message.info('撤回图片')
+  result.value = ''
+  message.info('撤回图片及其扫描结果')
 }
 </script>
 
@@ -154,9 +155,9 @@ const handleCancel = (): void => {
   border-radius: 0.5rem;
 }
 .preview-area img {
-  max-width: 100%; /* 不超过容器宽度 */
-  max-height: 100%; /* 不超过容器高度 */
-  object-fit: contain; /* 按比例缩放，完整显示 */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 .result-area {
   position: relative;
