@@ -18,7 +18,7 @@ export class AppTray {
   createTray() {
     if (this.tray) return this.tray
 
-    this.tray = new Tray(join(__dirname, '../../resources/xiaoyou.png'))
+    this.tray = new Tray(join(__dirname, '../../resources/icon.png'))
     const contextMenu = Menu.buildFromTemplate([
       {
         label: '显示主界面',

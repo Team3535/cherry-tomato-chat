@@ -6,7 +6,7 @@ export function createMainWindow(): BrowserWindow {
   const win = new BrowserWindow({
     width: 900,
     height: 670,
-    icon: join(__dirname, '../../resources/xiaoyou.png'),
+    icon: join(__dirname, '../../resources/icon.png'),
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon: join(__dirname, '../../resources/icon.png') } : {}),
